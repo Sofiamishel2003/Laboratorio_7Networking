@@ -7,8 +7,8 @@ data class CategoryResponse(
 )
 
 data class Category(
-    @SerializedName("idCategory") val idCategory: String,
-    @SerializedName("strCategory") val strCategory: String,
-    @SerializedName("strCategoryThumb") val strCategoryThumb: String,
-    @SerializedName("strCategoryDescription") val strCategoryDescription: String
+    val idCategory: String,
+    val strCategory: String,
+    val strCategoryThumb: String,
+    val strCategoryDescription: String
 )

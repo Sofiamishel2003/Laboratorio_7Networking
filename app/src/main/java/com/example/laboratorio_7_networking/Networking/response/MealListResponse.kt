@@ -1,12 +1,16 @@
 package com.example.laboratorio_7_networking.Networking.response
 import com.google.gson.annotations.SerializedName
 
+
 data class MealListResponse(
-    @SerializedName("meals") val meals: List<MealListItem>
+    @SerializedName("meals") val meals: List<Meal>
 )
 
-data class MealListItem(
-    @SerializedName("idMeal") val idMeal: String,
-    @SerializedName("strMeal") val strMeal: String,
-    @SerializedName("strMealThumb") val strMealThumb: String
+data class Meal(
+    val idMeal: String,
+    val strMeal: String,
+    val strMealThumb: String
 )
+
+
+

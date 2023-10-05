@@ -1,18 +1,20 @@
+// MealsApi.kt
 package com.example.laboratorio_7_networking.Networking
 
 import com.example.laboratorio_7_networking.Networking.response.CategoryResponse
 import com.example.laboratorio_7_networking.Networking.response.MealDetailResponse
 import com.example.laboratorio_7_networking.Networking.response.MealListResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MealsApi {
     @GET("categories.php")
-    suspend fun getCategories(): CategoryResponse
+    suspend fun getCategories(): Response<CategoryResponse>
 
     @GET("filter.php")
-    suspend fun getMealsByCategory(@Query("c") category: String): MealListResponse
+    suspend fun getMealsByCategory(@Query("c") category: String): Response<MealListResponse>
 
     @GET("lookup.php")
-    suspend fun getMealDetail(@Query("i") id: String): MealDetailResponse
+    suspend fun getMealDetail(@Query("i") id: String): Response<MealDetailResponse>
 }
