@@ -1,25 +1,47 @@
 package com.example.laboratorio_7_networking.Networking
 
+import com.example.laboratorio_7_networking.Networking.response.CategoryResponse
+import com.example.laboratorio_7_networking.Networking.response.MealDetailResponse
+import com.example.laboratorio_7_networking.Networking.response.MealResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object MealsWebService {
-    private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/" // Reemplaza con tu URL base
+class MealsWebService{
+    private lateinit var api: MealsApi
 
-    private val logging = HttpLoggingInterceptor()
-        .setLevel(HttpLoggingInterceptor.Level.BODY)
+    init {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private val httpClient = OkHttpClient.Builder()
-        .addInterceptor(logging)
-        .build()
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(httpClient)
-        .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.themealdb.com/api/json/v1/1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
 
-    val api: MealsApi = retrofit.create(MealsApi::class.java)
+        api = retrofit.create(MealsApi::class.java)
+    }
+
+    fun getMeals(): Call<MealResponse> {
+        return api.getMeals()
+    }
+
+    fun getMealsInCategory(categoryId: String): Call<CategoryResponse> {
+        val url = "$categoryId"
+        println("WebService getMealsInCategory Invoked with URL: $url")
+        return api.getMealsByCategory("$categoryId")
+    }
+
+    suspend fun getMealDetail(mealId: String): MealDetailResponse? {
+        return api.getMealDetail(mealId)
+    }
 }
+
+

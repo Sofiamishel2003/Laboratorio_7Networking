@@ -3,26 +3,28 @@ package com.example.laboratorio_7_networking.uiView.mealdetail.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.laboratorio_7_networking.Networking.MealsApi
-import com.example.laboratorio_7_networking.Networking.response.MealDetail
+import com.example.laboratorio_7_networking.Networking.MealsWebService
+import com.example.laboratorio_7_networking.Networking.response.MealDetailResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MealDetailRepository(private val api: MealsApi) {
+class MealDetailRepository(private val webService: MealsWebService = MealsWebService()) {
 
-    fun getMealDetail(id: String): LiveData<MealDetail> {
-        val liveData = MutableLiveData<MealDetail>()
+    suspend fun getMealDetail(mealId: String): MealDetailResponse? {
+        println("Attempting to fetch meal detail with mealId: $mealId")
+        println("URL: https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
 
-        GlobalScope.launch {
+        return withContext(Dispatchers.IO) {
             try {
-                val response = api.getMealDetail(id)
-                if (response.meals.isNotEmpty()) {
-                    liveData.postValue(response.meals[0])
-                }
+                val response = webService.getMealDetail(mealId)
+                println("Response: $response")
+                response
             } catch (e: Exception) {
-                // Handle error
+                println("Error: ${e.localizedMessage}")
+                null
             }
         }
-
-        return liveData
     }
 }
