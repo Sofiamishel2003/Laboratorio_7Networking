@@ -66,17 +66,22 @@ fun MealsInCategoryScreen(categoryId: String, navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(12.dp)  // Aumentar el padding
                         .clickable {
+                            // Añadir algún feedback visual aquí
                             navController.navigate("${Screens.Detail.route}/${meal.idmeal}")
-                        },
+                        }
                 ) {
                     Column(
                         modifier = Modifier
                             .padding(16.dp)
                             .fillMaxWidth()
                     ) {
-                        Text(text = meal.name, fontWeight = FontWeight.Bold)
+                        Text(
+                            text = meal.name,
+                            fontWeight = FontWeight.Bold,
+                            style = TextStyle(fontSize = 20.sp)  // Añadir estilo adicional
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
