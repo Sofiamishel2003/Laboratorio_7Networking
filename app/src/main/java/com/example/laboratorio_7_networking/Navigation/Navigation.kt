@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.laboratorio_7_networking.Navigation.Screens
 import com.example.laboratorio_7_networking.uiView.categories.view.MealsInCategoryScreen
-import com.example.laboratorio_7_networking.uiView.mealdetail.view.Mealdetail
-import com.example.laboratorio_7_networking.uiView.meals.view.MealsCategoriesScreen
+import com.example.laboratorio_7_networking.uiView.mealdetail.view.MealDetail
+import com.example.laboratorio_7_networking.uiView.meals.view.MealsListScreen
 
 
 @Composable
@@ -17,7 +17,7 @@ fun Navigation(modifier: Modifier = Modifier) {
         startDestination = Screens.Home.route,
         modifier = modifier) {
         composable(route = Screens.Home.route) {
-            MealsCategoriesScreen(navController)
+            MealsListScreen(navController)
         }
         composable(route = Screens.Category.route) { backStackEntry ->
             val categoryId = backStackEntry.arguments?.getString("categoryId")
@@ -28,7 +28,7 @@ fun Navigation(modifier: Modifier = Modifier) {
         composable(route = "${Screens.Detail.route}/{mealId}") { backStackEntry ->
             val mealId = backStackEntry.arguments?.getString("mealId")
             if (mealId != null) {
-                Mealdetail(mealId, navController)
+                MealDetail(mealId, navController)
             }
         }
     }
