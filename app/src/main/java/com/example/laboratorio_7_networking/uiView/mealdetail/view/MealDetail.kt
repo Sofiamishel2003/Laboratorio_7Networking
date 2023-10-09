@@ -26,8 +26,7 @@ import com.example.laboratorio_7_networking.Networking.response.CategoryItem
 import com.example.laboratorio_7_networking.uiView.categories.view.CategoriesViewModel
 
 @Composable
-fun Mealdetail(mealId: String, navController: NavController) {
-
+fun MealDetail(mealId: String, navController: NavController) {
     val viewModel: MealDetailViewModel = viewModel()
 
     LaunchedEffect(mealId) {
@@ -36,25 +35,19 @@ fun Mealdetail(mealId: String, navController: NavController) {
 
     val mealDetail by viewModel.mealDetail.collectAsState(null)
 
-    val currentMealId by rememberUpdatedState(mealId)
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(24.dp)  // Aumentar el padding
     ) {
         IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier
-                .align(Alignment.Start)
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.align(Alignment.Start)
         ) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))  // Aumentar el espacio
 
         if (mealDetail != null) {
             Column {
@@ -63,11 +56,13 @@ fun Mealdetail(mealId: String, navController: NavController) {
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))  // Espacio adicional
                 Text(
                     text = mealDetail?.details?.first()?.strInstructions ?: "No instructions available",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium  // Añadir peso medio
                 )
+                // Añadir más elementos visuales aquí si es necesario
             }
         } else {
             Text("Cargando detalles de la comida...", style = MaterialTheme.typography.displayLarge)

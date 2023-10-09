@@ -29,60 +29,50 @@ import com.example.laboratorio_7_networking.Networking.response.CategoryItem
 @Composable
 fun MealsInCategoryScreen(categoryId: String, navController: NavController) {
     val viewModel: CategoriesViewModel = viewModel()
-    val rememberedMeals: MutableState<List<CategoryItem>> = remember { mutableStateOf(emptyList<CategoryItem>()) }
-    println("MealsInCategoryScreen Invoked with categoryId: $categoryId")
+    val rememberedMeals: MutableState<List<CategoryItem>> = remember { mutableStateOf(emptyList()) }
 
     viewModel.getMealsInCategory(categoryId) { response ->
-        println("Response in Screen: $response")
-
-        if (response != null) {
-            val mealsFromTheApi = response?.categories
-            rememberedMeals.value = mealsFromTheApi.orEmpty()
-        }
+        val mealsFromTheApi = response?.categories
+        rememberedMeals.value = mealsFromTheApi.orEmpty()
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(24.dp)  // Aumentar el padding
     ) {
         IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier
-                .align(Alignment.Start)
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.align(Alignment.Start)
         ) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))  // Aumentar el espacio
 
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             items(rememberedMeals.value) { meal ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp)  // Aumentar el padding
+                        .padding(16.dp)  // Aumentar el padding
                         .clickable {
-                            // Añadir algún feedback visual aquí
                             navController.navigate("${Screens.Detail.route}/${meal.idmeal}")
                         }
                 ) {
                     Column(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(24.dp)  // Aumentar el padding interno
                             .fillMaxWidth()
                     ) {
                         Text(
                             text = meal.name,
                             fontWeight = FontWeight.Bold,
-                            style = TextStyle(fontSize = 20.sp)  // Añadir estilo adicional
+                            style = TextStyle(fontSize = 24.sp)  // Aumentar el tamaño de fuente
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))  // Aumentar el espacio
                     }
                 }
             }
